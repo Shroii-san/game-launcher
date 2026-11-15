@@ -9,6 +9,7 @@ ERROR_MESSAGES = {
     "MEDIA_INVALID": "File ini bukan media yang valid, jadi tidak ditambahkan.",
     "WINE_MISSING": ("Game ini butuh Wine untuk dijalankan, tapi Wine belum terpasang."),
     "EXE_NOT_FOUND": ("File game tidak ditemukan. Mungkin sudah dipindah atau dihapus."),
+    "GAME_ALREADY_RUNNING": "Game ini sedang berjalan dan tidak bisa diluncurkan dua kali.",
     "PATH_FORBIDDEN": "Path yang Anda pilih tidak aman untuk digunakan.",
     "INVALID_NAME": ("Nama tidak valid. Pastikan nama game tidak kosong dan sesuai format."),
     "INVALID_URL": "URL yang Anda masukkan tidak valid.",
