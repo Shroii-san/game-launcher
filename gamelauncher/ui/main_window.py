@@ -11,6 +11,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
+from gamelauncher.ui.dialogs.game_dialog import GameDialog
 from gamelauncher.ui.state import ViewState
 from gamelauncher.ui.theme import apply_theme
 from gamelauncher.ui.views.library_view import LibraryView
@@ -25,10 +26,12 @@ class MainWindow(QMainWindow):
         self.library_view = LibraryView(self)
         self.toast = Toast(self)
         self.theme_button = QPushButton("Dark mode")
+        self.add_game_button = QPushButton("Add game")
         self.search_input = QLineEdit()
         self.search_input.setPlaceholderText("Search games...")
         self.search_input.setClearButtonEnabled(True)
         self.search_input.textChanged.connect(self.library_view.apply_search)
+        self.add_game_button.clicked.connect(self.open_game_dialog)
 
         self._build_ui()
         self.set_theme(self.current_theme or "light")
@@ -49,6 +52,7 @@ class MainWindow(QMainWindow):
         header_layout.addWidget(title_label)
         header_layout.addStretch()
         header_layout.addWidget(self.search_input)
+        header_layout.addWidget(self.add_game_button)
         header_layout.addWidget(self.theme_button)
         self.theme_button.clicked.connect(self.toggle_theme)
 
@@ -77,6 +81,10 @@ class MainWindow(QMainWindow):
 
     def set_state(self, state: ViewState, message: str) -> None:
         self.library_view.set_state(state, message)
+
+    def open_game_dialog(self) -> None:
+        dialog = GameDialog(self)
+        dialog.exec()
 
     def show_toast(self, message: str, duration_ms: int = 2500) -> None:
         self.toast.show_message(message, duration_ms)
