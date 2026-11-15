@@ -28,12 +28,14 @@ def test_game_dialog_command_field_is_read_only_until_edit_clicked() -> None:
 def test_game_dialog_populates_existing_game_for_edit_mode() -> None:
     app = QApplication.instance() or QApplication([])
     dialog = GameDialog()
-    dialog.set_game_data({
-        "name": "Quest Runner",
-        "folder_path": "/tmp/games/quest",
-        "run_type": "exe",
-        "run_argv": ["wine", "quest.exe"],
-    })
+    dialog.set_game_data(
+        {
+            "name": "Quest Runner",
+            "folder_path": "/tmp/games/quest",
+            "run_type": "exe",
+            "run_argv": ["wine", "quest.exe"],
+        }
+    )
 
     assert dialog.name_field.text() == "Quest Runner"
     assert dialog.command_field.text() == "wine quest.exe"
