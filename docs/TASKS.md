@@ -13,12 +13,14 @@ Aturan kerja:
 
 ## Fase 0: Setup
 
-- [ ] **0.1** Repo, venv, `pyproject.toml`, struktur folder
+- [x] **0.1** Repo, venv, `pyproject.toml`, struktur folder
   Selesai bila: `python -m gamelauncher` menampilkan jendela kosong. Butuh: -
-- [ ] **0.2** Tooling: ruff, pytest, pre-commit
+- [x] **0.2** Tooling: ruff, pytest, pre-commit
   Selesai bila: `pytest` dan `ruff check` hijau di repo kosong. Butuh: 0.1
-- [ ] **0.3** Logging berputar + path XDG
+- [x] **0.3** Logging berputar + path XDG
   Selesai bila: log tertulis di `~/.local/state/gamelauncher/`. Butuh: 0.1
+
+Catatan SemVer: setelah fase 0 selesai, versi rilis yang dipakai adalah `0.1.0`.
 
 ---
 

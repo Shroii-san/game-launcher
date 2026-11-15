@@ -2,8 +2,13 @@ from __future__ import annotations
 
 from PySide6.QtWidgets import QApplication, QMainWindow
 
+from gamelauncher.logging_setup import setup_logging
+
 
 def main() -> int:
+    logger = setup_logging()
+    logger.info("Starting Game Launcher")
+
     app = QApplication([])
     app.setApplicationName("Game Launcher")
 
