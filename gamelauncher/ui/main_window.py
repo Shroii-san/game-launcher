@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from pathlib import Path
+
 from PySide6.QtCore import QSettings
 from PySide6.QtWidgets import (
     QHBoxLayout,
@@ -15,6 +17,7 @@ from gamelauncher.ui.dialogs.game_dialog import GameDialog
 from gamelauncher.ui.state import ViewState
 from gamelauncher.ui.theme import apply_theme
 from gamelauncher.ui.views.library_view import LibraryView
+from gamelauncher.ui.views.settings_view import SettingsView
 from gamelauncher.ui.widgets.toast import Toast
 
 
@@ -26,6 +29,7 @@ class MainWindow(QMainWindow):
         self.library_view = LibraryView(self)
         self.toast = Toast(self)
         self.theme_button = QPushButton("Dark mode")
+        self.settings_button = QPushButton("Settings")
         self.add_game_button = QPushButton("Add game")
         self.search_input = QLineEdit()
         self.search_input.setPlaceholderText("Search games...")
@@ -53,8 +57,10 @@ class MainWindow(QMainWindow):
         header_layout.addStretch()
         header_layout.addWidget(self.search_input)
         header_layout.addWidget(self.add_game_button)
+        header_layout.addWidget(self.settings_button)
         header_layout.addWidget(self.theme_button)
         self.theme_button.clicked.connect(self.toggle_theme)
+        self.settings_button.clicked.connect(self.open_settings_dialog)
 
         root_layout.addLayout(header_layout)
 
@@ -85,6 +91,45 @@ class MainWindow(QMainWindow):
     def open_game_dialog(self) -> None:
         dialog = GameDialog(self)
         dialog.exec()
+
+    def open_settings_dialog(self) -> None:
+        dialog = self._build_settings_dialog()
+        dialog.exec()
+
+    def _build_settings_dialog(self):
+        from PySide6.QtWidgets import QDialog, QDialogButtonBox, QVBoxLayout
+
+        dialog = QDialog(self)
+        dialog.setWindowTitle("Settings")
+        dialog.resize(560, 280)
+
+        view = SettingsView(dialog)
+        default_games_root = Path.home() / "Games"
+        default_archive_dir = default_games_root / "_archives"
+
+        view.set_games_root(self.settings.value("games_root", str(default_games_root), type=str))
+        view.set_archive_dir(self.settings.value("archive_dir", str(default_archive_dir), type=str))
+
+        buttons = QDialogButtonBox(
+            QDialogButtonBox.StandardButton.Save | QDialogButtonBox.StandardButton.Cancel
+        )
+        buttons.accepted.connect(dialog.accept)
+        buttons.rejected.connect(dialog.reject)
+
+        root = QVBoxLayout(dialog)
+        root.addWidget(view)
+        root.addWidget(buttons)
+
+        def handle_accept() -> None:
+            if view.save_settings():
+                self.settings.setValue("games_root", view.games_root)
+                self.settings.setValue("archive_dir", view.archive_dir)
+                self.show_toast("Settings saved")
+                dialog.accept()
+
+        buttons.accepted.disconnect(dialog.accept)
+        buttons.accepted.connect(handle_accept)
+        return dialog
 
     def show_toast(self, message: str, duration_ms: int = 2500) -> None:
         self.toast.show_message(message, duration_ms)
