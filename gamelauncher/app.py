@@ -4,6 +4,7 @@ from pathlib import Path
 
 from PySide6.QtWidgets import QApplication, QMessageBox
 
+from gamelauncher.exception_handler import install_global_exception_handler
 from gamelauncher.logging_setup import setup_logging
 from gamelauncher.startup import ensure_directory, run_startup_checks
 from gamelauncher.ui.main_window import MainWindow
@@ -15,6 +16,7 @@ def main() -> int:
 
     app = QApplication.instance() or QApplication([])
     app.setApplicationName("Game Launcher")
+    install_global_exception_handler()
 
     settings = {
         "games_root": Path.home() / "Games",
