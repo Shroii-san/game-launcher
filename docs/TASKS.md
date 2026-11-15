@@ -65,7 +65,7 @@ Catatan SemVer: setelah fase 0 selesai, versi rilis yang dipakai adalah `0.1.0`.
       Selesai bila: search tanpa tombol; 4 state tampil benar. Butuh: 1.8, 1.13
 - [x] **1.15** Dialog create/edit game
       Selesai bila: validator UI + validator logic; command read-only, tombol Edit untuk mengubah. Butuh: 1.7, 1.13
-- [ ] **1.16** Tombol Play + status proses
+- [x] **1.16** Tombol Play + status proses
       Selesai bila: Play, disabled saat berjalan, error ramah + Lihat log. Butuh: 1.11, 1.14
 - [ ] **1.17** Settings view
       Selesai bila: ubah direktori dengan dialog "at own risk". Butuh: 1.9, 1.13
