@@ -6,6 +6,7 @@ from gamelauncher.core.errors import (
     MediaError,
     ValidationError,
 )
+from gamelauncher.core.paths import validate_path
 
 __all__ = [
     "ArchiveError",
@@ -14,4 +15,5 @@ __all__ = [
     "LauncherError",
     "MediaError",
     "ValidationError",
+    "validate_path",
 ]
