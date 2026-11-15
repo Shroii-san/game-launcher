@@ -10,7 +10,11 @@ class GameRepository:
         self.conn = conn
 
     @staticmethod
-    def _serialize_json(value: str | list[str] | dict[str, str] | None, *, default: str = "[]") -> str:
+    def _serialize_json(
+        value: str | list[str] | dict[str, str] | None,
+        *,
+        default: str = "[]",
+    ) -> str:
         if value is None:
             return default
         if isinstance(value, str):
@@ -85,7 +89,9 @@ class GameRepository:
         record["run_argv"] = self._parse_json(record["run_argv"])
         record["run_env"] = self._parse_json(record["run_env"])
         record["genre_ids"] = self._fetch_relation_ids(game_id, "game_genres", "genre_id")
-        record["developer_ids"] = self._fetch_relation_ids(game_id, "game_developers", "developer_id")
+        record["developer_ids"] = self._fetch_relation_ids(
+            game_id, "game_developers", "developer_id"
+        )
         record["tag_ids"] = self._fetch_relation_ids(game_id, "game_tags", "tag_id")
         record["group_ids"] = self._fetch_relation_ids(game_id, "game_user_groups", "group_id")
         return record
@@ -147,7 +153,13 @@ class GameRepository:
         self.conn.execute("DELETE FROM games WHERE id = ?", (game_id,))
         self.conn.commit()
 
-    def _replace_relation(self, game_id: int, table: str, values: list[int], column_name: str) -> None:
+    def _replace_relation(
+        self,
+        game_id: int,
+        table: str,
+        values: list[int],
+        column_name: str,
+    ) -> None:
         self.conn.execute(f"DELETE FROM {table} WHERE game_id = ?", (game_id,))
         if not values:
             return
@@ -157,7 +169,12 @@ class GameRepository:
                 (game_id, value),
             )
 
-    def _fetch_relation_ids(self, game_id: int, table: str, column_name: str) -> list[int]:
+    def _fetch_relation_ids(
+        self,
+        game_id: int,
+        table: str,
+        column_name: str,
+    ) -> list[int]:
         rows = self.conn.execute(
             f"SELECT {column_name} FROM {table} WHERE game_id = ? ORDER BY {column_name}",
             (game_id,),

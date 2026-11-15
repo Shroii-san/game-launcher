@@ -1,5 +1,3 @@
-import sqlite3
-
 from gamelauncher.core.constants import DEFAULT_GENRES
 from gamelauncher.db.engine import get_connection
 from gamelauncher.db.migration import upgrade_database

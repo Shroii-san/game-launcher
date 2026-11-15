@@ -40,16 +40,21 @@ class TaxonomyRepository:
         return dict(row) if row is not None else None
 
     def list_genres(self) -> list[dict[str, object]]:
-        rows = self.conn.execute(
-            "SELECT id, name, is_default FROM genres ORDER BY id"
-        ).fetchall()
+        rows = self.conn.execute("SELECT id, name, is_default FROM genres ORDER BY id").fetchall()
         return [dict(row) for row in rows]
 
-    def update_genre(self, genre_id: int, name: str) -> dict[str, object] | None:
+    def update_genre(
+        self,
+        genre_id: int,
+        name: str,
+    ) -> dict[str, object] | None:
         normalized = self._normalize_name(name)
         if not normalized:
             raise ValueError("genre name cannot be empty")
-        self.conn.execute("UPDATE genres SET name = ? WHERE id = ?", (normalized, genre_id))
+        self.conn.execute(
+            "UPDATE genres SET name = ? WHERE id = ?",
+            (normalized, genre_id),
+        )
         self.conn.commit()
         return self.get_genre(genre_id)
 
@@ -61,18 +66,28 @@ class TaxonomyRepository:
         return self._get_or_create("developers", "name", name)
 
     def get_developer(self, developer_id: int) -> dict[str, object] | None:
-        row = self.conn.execute("SELECT id, name FROM developers WHERE id = ?", (developer_id,)).fetchone()
+        row = self.conn.execute(
+            "SELECT id, name FROM developers WHERE id = ?",
+            (developer_id,),
+        ).fetchone()
         return dict(row) if row is not None else None
 
     def list_developers(self) -> list[dict[str, object]]:
         rows = self.conn.execute("SELECT id, name FROM developers ORDER BY id").fetchall()
         return [dict(row) for row in rows]
 
-    def update_developer(self, developer_id: int, name: str) -> dict[str, object] | None:
+    def update_developer(
+        self,
+        developer_id: int,
+        name: str,
+    ) -> dict[str, object] | None:
         normalized = self._normalize_name(name)
         if not normalized:
             raise ValueError("developer name cannot be empty")
-        self.conn.execute("UPDATE developers SET name = ? WHERE id = ?", (normalized, developer_id))
+        self.conn.execute(
+            "UPDATE developers SET name = ? WHERE id = ?",
+            (normalized, developer_id),
+        )
         self.conn.commit()
         return self.get_developer(developer_id)
 
@@ -84,18 +99,28 @@ class TaxonomyRepository:
         return self._get_or_create("tags", "name", name)
 
     def get_tag(self, tag_id: int) -> dict[str, object] | None:
-        row = self.conn.execute("SELECT id, name FROM tags WHERE id = ?", (tag_id,)).fetchone()
+        row = self.conn.execute(
+            "SELECT id, name FROM tags WHERE id = ?",
+            (tag_id,),
+        ).fetchone()
         return dict(row) if row is not None else None
 
     def list_tags(self) -> list[dict[str, object]]:
         rows = self.conn.execute("SELECT id, name FROM tags ORDER BY id").fetchall()
         return [dict(row) for row in rows]
 
-    def update_tag(self, tag_id: int, name: str) -> dict[str, object] | None:
+    def update_tag(
+        self,
+        tag_id: int,
+        name: str,
+    ) -> dict[str, object] | None:
         normalized = self._normalize_name(name)
         if not normalized:
             raise ValueError("tag name cannot be empty")
-        self.conn.execute("UPDATE tags SET name = ? WHERE id = ?", (normalized, tag_id))
+        self.conn.execute(
+            "UPDATE tags SET name = ? WHERE id = ?",
+            (normalized, tag_id),
+        )
         self.conn.commit()
         return self.get_tag(tag_id)
 
