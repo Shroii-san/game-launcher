@@ -69,7 +69,7 @@ Catatan SemVer: setelah fase 0 selesai, versi rilis yang dipakai adalah `0.1.0`.
       Selesai bila: Play, disabled saat berjalan, error ramah + Lihat log. Butuh: 1.11, 1.14
 - [ ] **1.17** Settings view
       Selesai bila: ubah direktori dengan dialog "at own risk". Butuh: 1.9, 1.13
-- [ ] **1.18** Startup sequence + cek dependensi
+- [x] **1.18** Startup sequence + cek dependensi
       Selesai bila: dependensi hilang jadi peringatan, bukan crash; direktori hilang memunculkan dialog pemulihan. Butuh: 1.9
 - [ ] **1.19** Global exception handler
       Selesai bila: error tak terduga menampilkan dialog ramah + Salin detail, tanpa stack trace. Butuh: 1.1, 1.13
