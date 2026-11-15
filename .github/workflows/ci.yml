@@ -1,0 +1,61 @@
+name: CI
+
+# Kapan workflow berjalan
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+# Batalkan run lama jika ada push baru ke branch/PR yang sama
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+# Izin minimal: hanya baca isi repo
+permissions:
+  contents: read
+
+jobs:
+  test:
+    # Nama job ini yang dipilih di branch protection ("test")
+    name: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    env:
+      # CI tidak punya layar, jalankan Qt tanpa GUI
+      QT_QPA_PLATFORM: offscreen
+
+    steps:
+      - name: Ambil kode
+        uses: actions/checkout@v4
+
+      - name: Siapkan Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Pasang dependensi sistem
+        # 7z dan unar untuk test ekstraksi, ffmpeg untuk test video,
+        # sisanya library yang dibutuhkan Qt agar bisa dimuat tanpa layar.
+        # Catatan: dukungan rar penuh butuh paket non-free (p7zip-rar/unrar);
+        # test rar dilewati atau memakai unar jika paket tidak tersedia.
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y p7zip-full unar ffmpeg \
+            libegl1 libgl1 libxkbcommon0 libdbus-1-3 libfontconfig1
+
+      - name: Pasang dependensi Python
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+
+      - name: Lint (ruff check)
+        run: ruff check .
+
+      - name: Cek format (ruff format)
+        run: ruff format --check .
+
+      - name: Test (pytest)
+        run: pytest
