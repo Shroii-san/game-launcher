@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Virtual environment
+.venv/
+venv/
+
+# Tool cache
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Secret dan konfigurasi lokal
+.env
+.env.*
+!.env.example
+
+# Database lokal (data pribadi, jangan di-commit)
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+
+# Data runtime aplikasi
+logs/
+*.log
+
+# Hasil packaging
+*.deb
+*.AppImage
+
+# Editor dan OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
