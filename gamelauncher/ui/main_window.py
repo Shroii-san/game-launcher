@@ -13,7 +13,7 @@ from PySide6.QtWidgets import (
 
 from gamelauncher.ui.state import ViewState
 from gamelauncher.ui.theme import apply_theme
-from gamelauncher.ui.widgets.state_panel import StatePanel
+from gamelauncher.ui.views.library_view import LibraryView
 from gamelauncher.ui.widgets.toast import Toast
 
 
@@ -22,12 +22,13 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.settings = QSettings("Shroii-san", "GameLauncher")
         self.current_theme = self.settings.value("theme", "light", type=str)
-        self.state_panel = StatePanel()
+        self.library_view = LibraryView(self)
         self.toast = Toast(self)
         self.theme_button = QPushButton("Dark mode")
         self.search_input = QLineEdit()
         self.search_input.setPlaceholderText("Search games...")
         self.search_input.setClearButtonEnabled(True)
+        self.search_input.textChanged.connect(self.library_view.apply_search)
 
         self._build_ui()
         self.set_theme(self.current_theme or "light")
@@ -56,7 +57,7 @@ class MainWindow(QMainWindow):
         self.content_panel = QWidget()
         content_layout = QVBoxLayout(self.content_panel)
         content_layout.setContentsMargins(0, 0, 0, 0)
-        content_layout.addWidget(self.state_panel, stretch=1)
+        content_layout.addWidget(self.library_view, stretch=1)
         root_layout.addWidget(self.content_panel, stretch=1)
 
         self.setCentralWidget(central_widget)
@@ -75,7 +76,7 @@ class MainWindow(QMainWindow):
         self.set_theme(next_theme)
 
     def set_state(self, state: ViewState, message: str) -> None:
-        self.state_panel.set_state(state, message)
+        self.library_view.set_state(state, message)
 
     def show_toast(self, message: str, duration_ms: int = 2500) -> None:
         self.toast.show_message(message, duration_ms)

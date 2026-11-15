@@ -61,7 +61,7 @@ Catatan SemVer: setelah fase 0 selesai, versi rilis yang dipakai adalah `0.1.0`.
 
 - [x] **1.13** Shell UI: main window, tema light/dark, `ViewState`, `state_panel`, `toast`
       Selesai bila: ganti tema persisten; panel Loading/Empty/Error/Success bisa dipakai ulang. Butuh: 0.1
-- [ ] **1.14** Library view: grid + list, livesearch, filter, sort
+- [x] **1.14** Library view: grid + list, livesearch, filter, sort
       Selesai bila: search tanpa tombol; 4 state tampil benar. Butuh: 1.8, 1.13
 - [ ] **1.15** Dialog create/edit game
       Selesai bila: validator UI + validator logic; command read-only, tombol Edit untuk mengubah. Butuh: 1.7, 1.13
