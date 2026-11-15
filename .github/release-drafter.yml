@@ -10,6 +10,23 @@ template: |
   - This release was generated automatically.
   - See the full history for details.
 
+version-resolver:
+  major:
+    labels:
+      - major
+      - breaking
+  minor:
+    labels:
+      - feature
+      - enhancement
+  patch:
+    labels:
+      - bug
+      - fix
+      - maintenance
+      - chore
+  default: patch
+
 exclude-labels:
   - ignore-for-release
 exclude-contributors:
